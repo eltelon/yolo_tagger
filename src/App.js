@@ -10,7 +10,7 @@ const App = () => {
     // State to track the index of the currently displayed image
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     // State to manage the list of defined classes
-    const [classes, setClasses] = useState(['13','mega','chv','tvno']); // Initial example classes
+    const [classes, setClasses] = useState(['13','mega','chv','tvno', 'marcador_futbol', 'tiempo_futbol']); // Initial example classes
     // State to hold the currently selected class for new annotations
     const [selectedClass, setSelectedClass] = useState('');
     // State to track if a bounding box is currently being drawn
@@ -487,12 +487,14 @@ const App = () => {
             // classes.txt (optional but handy)
             zip.file('classes.txt', classes.join('\n'));
 
+            const usedClassSet = new Set();
             // process every image
             for (const img of images) {
                 // 1. produce the .txt content
                 const labelLines = img.annotations.map(ann => {
                     const id = classMap.get(ann.class);
-                    if (id === undefined) return ''; // skip unknown class
+                    if (id === undefined) return ''; // skip unknown 
+                    usedClassSet.add(ann.class);
                     const [x, y, w, h] = ann.bbox;   // absolute pixel coords
                     // YOLO wants centre-coords & size NORMALISED (0-1)
                     const xC = (x + w / 2) / img.width;
@@ -509,7 +511,16 @@ const App = () => {
                 // 3. add the image itself
                 zip.folder("images").file(img.file.name, img.file);
             }
-
+            const usedClasses = Array.from(usedClassSet);
+            const nc = usedClasses.length;
+            const yamlContent =
+            `train: ../train/images
+            
+            
+nc: ${nc}
+names: [${usedClasses.map(cls => `'${cls}'`).join(', ')}]
+            `;
+            zip.file('data.yaml', yamlContent);
             // 4. generate and download
             const blob = await zip.generateAsync({ type: 'blob' });
             saveAs(blob, 'yolo_txt_dataset.zip');
