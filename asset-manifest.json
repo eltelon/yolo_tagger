@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/yolo_tagger/static/css/main.571f8022.css",
-    "main.js": "/yolo_tagger/static/js/main.54e4be0d.js",
+    "main.js": "/yolo_tagger/static/js/main.2f69ce51.js",
     "static/js/453.88149284.chunk.js": "/yolo_tagger/static/js/453.88149284.chunk.js",
     "index.html": "/yolo_tagger/index.html",
     "main.571f8022.css.map": "/yolo_tagger/static/css/main.571f8022.css.map",
-    "main.54e4be0d.js.map": "/yolo_tagger/static/js/main.54e4be0d.js.map",
+    "main.2f69ce51.js.map": "/yolo_tagger/static/js/main.2f69ce51.js.map",
     "453.88149284.chunk.js.map": "/yolo_tagger/static/js/453.88149284.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.571f8022.css",
-    "static/js/main.54e4be0d.js"
+    "static/js/main.2f69ce51.js"
   ]
 }
